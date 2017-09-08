@@ -3,6 +3,7 @@ package cat.tecnocampus;
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
 import cat.tecnocampus.persistence.NoteLabDAO;
+import cat.tecnocampus.persistence.UserLabDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +20,9 @@ public class Notes17Application implements CommandLineRunner {
 
 	@Autowired
 	private NoteLabDAO noteLabDAO;
+
+	@Autowired
+	private UserLabDAO userLabDAO;
 
 
 	@Override
@@ -37,6 +41,8 @@ public class Notes17Application implements CommandLineRunner {
 
 		System.out.println(note);
 
-		noteLabDAO.insert(note);
+		userLabDAO.insert(user);
+		noteLabDAO.insert(note, user);
+
 	}
 }
