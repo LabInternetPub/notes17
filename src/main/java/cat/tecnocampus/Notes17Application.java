@@ -27,9 +27,9 @@ public class Notes17Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		UserLab user = new UserLab.UserLabBuilder("roure", "roure@tecnocampus.cat")
-				.name("Josep")
-				.secondName("Roure")
+		UserLab user = new UserLab.UserLabBuilder("maristany", "maristany@tecnocampus.cat")
+				.name("Marta")
+				.secondName("Maristany")
 				.build();
 
 		System.out.println(user);
@@ -43,6 +43,16 @@ public class Notes17Application implements CommandLineRunner {
 
 		userLabDAO.insert(user);
 		noteLabDAO.insert(note, user);
+
+		noteLabDAO.findAll().forEach(System.out::println);
+
+		noteLabDAO.findByUsername(user.getUsername()).forEach(System.out::println);
+
+		System.out.println(noteLabDAO.findById(3));
+
+		System.out.println(noteLabDAO.existsNote(note));
+		NoteLab n = new NoteLab.NoteLabBuilder("hola", "hola que tal").dateCreation(LocalDateTime.now()).dateEdit(LocalDateTime.now()).build();
+		System.out.println(noteLabDAO.existsNote(n));
 
 	}
 }
