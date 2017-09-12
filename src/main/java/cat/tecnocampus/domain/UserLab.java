@@ -82,7 +82,9 @@ public class UserLab {
     }
 
     public String toString() {
-        return "Usuari: " + this.username + ", " + this.name + " " + this.secondName;
+        String value = "Usuari: " + this.username + ", " + this.name + " " + this.secondName;
+        value = value + "\n    " + this.getnotes().keySet().toString();
+        return value;
     }
 
     public boolean existsNote(String title) {

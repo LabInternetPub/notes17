@@ -44,6 +44,15 @@ public class Notes17Application implements CommandLineRunner {
 		userLabDAO.insert(user);
 		noteLabDAO.insert(note, user);
 
+		System.out.println();
+		System.out.println(userLabDAO.findByUsername("maristany"));
+
+		System.out.println();
+		userLabDAO.findAll().forEach(System.out::println);
+
+		System.out.println();
+		userLabDAO.findAllEager().forEach(System.out::println);
+
 		noteLabDAO.findAll().forEach(System.out::println);
 
 		noteLabDAO.findByUsername(user.getUsername()).forEach(System.out::println);
