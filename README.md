@@ -56,6 +56,12 @@ which would return all users from the table since 1=1 will always evaluate to tr
 
 Instead use sql parameters that will protect your code from injections as the sql engine will check whether each parameter is correct
 for its column and will only allow one single value.
+```java
+   public UserLab findByUsername(String userName) {
+        String FIND_BY_USERNAME = "Select * from user_lab where username = ?";
+        return jdbcTemplate.queryForObject(FIND_BY_USERNAME, mapperEager, userName);
+    }
+```
 
 ## Developers tools
 It is very convenient not to work with the real database in production since you do not want to have test data in it and also because you want to 
