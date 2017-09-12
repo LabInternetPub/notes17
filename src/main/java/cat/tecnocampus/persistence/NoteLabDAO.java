@@ -86,7 +86,7 @@ public class NoteLabDAO {
 
     public boolean existsNote(NoteLab note) {
         int countOfNotes = jdbcTemplate.queryForObject(
-                EXISTS_NOTE, Integer.class, note.getTitle(), note.getDateCreation());
+                EXISTS_NOTE, Integer.class, note.getTitle(), Timestamp.valueOf(note.getDateCreation()));
         return countOfNotes > 0;
     }
 
