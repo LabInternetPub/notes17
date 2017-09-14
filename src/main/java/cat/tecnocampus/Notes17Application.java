@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.time.LocalDateTime;
 
@@ -67,8 +68,12 @@ public class Notes17Application implements CommandLineRunner {
 		NoteLab n = new NoteLab.NoteLabBuilder("hola", "hola que tal").dateCreation(LocalDateTime.now()).dateEdit(LocalDateTime.now()).build();
 		System.out.println(noteLabDAO.existsNote(n));
 
+		userUseCases.getUsers();
+
 		userUseCases.getAllNotes().forEach(System.out::println);
 
 		userUseCases.getUserNotes("roure").forEach(System.out::println);
+
+		System.out.println(userUseCases.getUser("roure"));
 	}
 }

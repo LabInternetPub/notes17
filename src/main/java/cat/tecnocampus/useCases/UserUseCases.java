@@ -92,4 +92,11 @@ public class UserUseCases {
     public List<NoteLab> getAllNotes() {
         return noteLabDAO.findAll();
     }
+
+    public List<NoteLab> getUserNotes(UserLab userLab) {
+        if (userLab.getnotes().isEmpty()) {  //in case user has been retrieved lazily
+            userLab.addNotes(noteLabDAO.findByUsername(userLab.getUsername()));
+        }
+        return userLab.getNotesAsList();
+    }
 }
