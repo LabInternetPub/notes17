@@ -92,7 +92,7 @@
   ```java
   @Pointcut(“<pointcut definition”)
   Public void pointcutDefName() {}
-  ``
+  ```
   
   Whe need to create the Aspect class as a bean or component for the Spring framework to use it when necessary.
   
