@@ -90,7 +90,7 @@
   
   Pointcuts can be defined separately and used in the previous annotations. The name of the pointcut definition is the name of the empty method that goes just afterwards
   ```java
-  @Pointcut(“<pointcut definition”)
+  @Pointcut(“<pointcut definition>”)
   Public void pointcutDefName() {}
   ```
   
