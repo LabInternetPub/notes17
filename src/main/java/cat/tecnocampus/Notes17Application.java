@@ -4,6 +4,7 @@ import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
 import cat.tecnocampus.persistence.NoteLabDAO;
 import cat.tecnocampus.persistence.UserLabDAO;
+import cat.tecnocampus.useCases.UserUseCases;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,9 @@ public class Notes17Application implements CommandLineRunner {
 
 	@Autowired
 	private UserLabDAO userLabDAO;
+
+	@Autowired
+	private UserUseCases userUseCases;
 
 
 	@Override
@@ -63,5 +67,8 @@ public class Notes17Application implements CommandLineRunner {
 		NoteLab n = new NoteLab.NoteLabBuilder("hola", "hola que tal").dateCreation(LocalDateTime.now()).dateEdit(LocalDateTime.now()).build();
 		System.out.println(noteLabDAO.existsNote(n));
 
+		userUseCases.getAllNotes().forEach(System.out::println);
+
+		userUseCases.getUserNotes("roure").forEach(System.out::println);
 	}
 }

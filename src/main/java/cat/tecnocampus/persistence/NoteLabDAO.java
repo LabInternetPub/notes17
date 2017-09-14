@@ -81,7 +81,7 @@ public class NoteLabDAO {
 
     public int updateNote(String oldTitle, NoteLab note) {
         return jdbcTemplate.update(UPDATE_NOTE,
-                note.getTitle(), note.getContent(), LocalDateTime.now(), note.getDateCreation(), oldTitle);
+                note.getTitle(), note.getContent(), note.getDateEdit(), note.getDateCreation(), oldTitle);
     }
 
     public boolean existsNote(NoteLab note) {
