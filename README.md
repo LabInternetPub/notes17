@@ -54,20 +54,26 @@
   
   Let’s say we want to advise the method perform() defined in class concert.Performance
   
-  ```execution(* concert.Performance.perform(..))``
+  ```
+  execution(* concert.Performance.perform(..))
+  ```
   
   * execution: triggers on method’s execution 
   * \* returning any type
   * .. taking any arguments
   
-  ``execution(* concert.Performance.perform(..)) && within(concert.*)```
+  ```
+  execution(* concert.Performance.perform(..)) && within(concert.*)
+  ```
   
   * && combinator operator (and). You can use || and ! logic operators
   * within(concert.*) : when the method is called from within any class in the “concert” package
   
   Spring defines a new designator (not in AspectJ) “bean()” that allows to designate beans by their ID in a pointcut definition
   
-  ```execution(* concert.Performance.perform(..)) && bean(‘pepe’)```
+  ```
+  execution(* concert.Performance.perform(..)) && bean(‘pepe’)
+  ```
   
   In this case the advice is going to be executed if perform is called from the bean ‘pepe’
  
