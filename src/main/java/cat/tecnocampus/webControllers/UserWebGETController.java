@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
  * Created by josep on 14/9/17.
  */
 @Controller
-public class UserWebController {
+public class UserWebGETController {
     private final UserUseCases userUseCases;
 
-    public UserWebController(UserUseCases userUseCases) {
+    public UserWebGETController(UserUseCases userUseCases) {
             this.userUseCases = userUseCases;
     }
 

@@ -7,12 +7,16 @@ import java.util.*;
  */
 public class UserLab {
 
-    private final String username;
-    private final String name;
-    private final String secondName;
-    private final String email;
+    private String username;
+    private String name;
+    private String secondName;
+    private String email;
 
     private final Map<String,NoteLab> noteLabs;
+
+    public UserLab() {
+        noteLabs = new HashMap<>();
+    }
 
     private UserLab(UserLabBuilder builder) {
         noteLabs = new HashMap<>();
@@ -41,6 +45,22 @@ public class UserLab {
 
     public Map<String, NoteLab> getNotes() {
         return this.noteLabs;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<NoteLab> getNotesAsList() {

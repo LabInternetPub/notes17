@@ -7,11 +7,14 @@ import java.time.LocalDateTime;
  */
 public class NoteLab {
 
-    private final String title;
-    private final String content;
+    private String title;
+    private String content;
 
-    private final LocalDateTime dateCreation;
-    private final LocalDateTime dateEdit;
+    private LocalDateTime dateCreation;
+    private LocalDateTime dateEdit;
+
+    public NoteLab() {
+    }
 
     private NoteLab(NoteLabBuilder builder) {
         title = builder.title;
@@ -34,6 +37,22 @@ public class NoteLab {
 
     public LocalDateTime getDateEdit() {
         return dateEdit;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setDateCreation(LocalDateTime dateCreation) {
+        this.dateCreation = dateCreation;
+    }
+
+    public void setDateEdit(LocalDateTime dateEdit) {
+        this.dateEdit = dateEdit;
     }
 
     public String toString(){

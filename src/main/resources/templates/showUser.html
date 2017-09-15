@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>User</title>
-    <link rel="stylesheet" type="text/css" href="../table.css"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../table.css}"/>
 </head>
 <body>
 <h1><span th:text="${userLab.name} + ' ' + ${userLab.secondName}"/></h1>
