@@ -4,8 +4,6 @@ import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
 import cat.tecnocampus.persistence.NoteLabDAO;
 import cat.tecnocampus.persistence.UserLabDAO;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,7 +92,7 @@ public class UserUseCases {
     }
 
     public List<NoteLab> getUserNotes(UserLab userLab) {
-        if (userLab.getnotes().isEmpty()) {  //in case user has been retrieved lazily
+        if (userLab.getNotes().isEmpty()) {  //in case user has been retrieved lazily
             userLab.addNotes(noteLabDAO.findByUsername(userLab.getUsername()));
         }
         return userLab.getNotesAsList();

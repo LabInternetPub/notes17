@@ -2,7 +2,6 @@ package cat.tecnocampus.persistence;
 
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
-import com.sun.tools.corba.se.idl.constExpr.Not;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -74,7 +72,7 @@ public class NoteLabDAO {
 
             @Override
             public int getBatchSize() {
-                return owner.getnotes().size();
+                return owner.getNotes().size();
             }
         });
     }

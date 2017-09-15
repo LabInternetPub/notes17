@@ -39,7 +39,7 @@ public class UserLab {
         return secondName;
     }
 
-    public Map<String, NoteLab> getnotes() {
+    public Map<String, NoteLab> getNotes() {
         return this.noteLabs;
     }
 
@@ -68,7 +68,7 @@ public class UserLab {
     }
 
     public NoteLab removeNote(NoteLab noteLab) {
-        getnotes().remove(noteLab);
+        getNotes().remove(noteLab);
 
         return noteLab;
     }
@@ -83,7 +83,7 @@ public class UserLab {
 
     public String toString() {
         String value = "Usuari: " + this.username + ", " + this.name + " " + this.secondName;
-        value = value + "\n    " + this.getnotes().keySet().toString();
+        value = value + "\n    " + this.getNotes().keySet().toString();
         return value;
     }
 
