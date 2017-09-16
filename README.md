@@ -44,7 +44,7 @@ the request access this kind of attributes through the Model object
 ### Forward vs Redirect
 Extracted from: http://www.javapractices.com/topic/TopicAction.do?Id=181
 
-####Forward 
+#### Forward 
 * a forward is performed internally by the servlet
 * the browser is completely unaware that it has taken place, so its original URL remains intact
 * any browser reload of the resulting page will simple repeat the original request, with the original URL
