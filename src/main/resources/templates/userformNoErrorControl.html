@@ -7,27 +7,34 @@
 </head>
 <body>
 
+<div align="center">
 
 <h1>Register User</h1>
 
 <form method="POST" th:object="${userLab}">
-    <label>First Name</label>:
-    <input type="text" th:field="*{name}"/><br/>
-
-    <label>Last Name</label>:
-    <input type="text" th:field="*{secondName}"/><br/>
-
-    <label>Email</label>:
-    <input type="text" th:field="*{email}"/><br/>
-
-    <label>Username</label>:
-    <input type="text" th:field="*{username}"/><br/>
-
+    <table>
+        <tr>
+            <td><label>First Name</label>:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td><label>Last Name</label>:</td>
+            <td><input type="text" th:field="*{secondName}"/></td>
+        </tr>
+        <tr>
+            <td><label>Email</label>:</td>
+            <td><input type="text" th:field="*{email}"/></td>
+        </tr>
+        <tr>
+            <td><label>Username</label>:</td>
+            <td><input type="text" th:field="*{username}"/></td>
+        </tr>
+    </table>
 
     <input type="submit" value="Create User" />
 
 
 </form>
-
+</div>
 </body>
 </html>
