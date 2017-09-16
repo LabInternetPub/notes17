@@ -70,5 +70,4 @@ public class UserWebGETController {
         model.addAttribute("userLab", userUseCases.getUser(username));
         return "showUser";
     }
-
 }

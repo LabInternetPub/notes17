@@ -1,5 +1,13 @@
 # Spring Web MVC
 
+## HTTP(S) protocol
+This is the protocol used in all web calls. One thing you need to keep in mind is that **HTTP does NOT have state** meaning 
+that two different http requests are completely independent and have nothing to do each other.
+
+In order to keep an *illusion* of state (like keeping a session for an user) there are a couple of tricks. 
+* Write path parameters to send the session id
+* Keep the session id in cookies   
+
 ## GET method
 * Static pages
 * Dynamic pages: JSP vs Thymeleaf (and others)
@@ -11,14 +19,23 @@
 * http://localhost:8080/users/roure 
 
 ## POST method
-* Forms best use POST method instead of GET. POST sends parameters in the http head request while GET sends them concatenated
-in the request query string.
+* Forms best use POST method instead of GET. POST sends parameters in the http body request while GET sends them concatenated
+in the request query string and the user can easily see them 
 * If *"action"* is not stated in a *form* it sends the request to the same link used to call the form
 * After processing the form the *servlet (controller)* should redirect to another page (for example showing the effects of
 the action) in order to avoid unwillingly re-sending the form
 
+### Redirected attributes
+Once the form is processed we should redirect to another page and we may want to send attributes to the redirected page.
+There are three kind of attributes:
+* Request parameter
+* Path variable
+* Flash attributes: sent through the web context, in fact, these attributes never leave the server! The servlet responding 
+the request access this kind of attributes through the Model object 
+
 ### POST examples
-* http://localhost:8080/createUser/noErrorControl
+* **Post form, create a new user (with no error control)**: http://localhost:8080/createUser/noErrorControl
+* **Redirect attributes example** http://localhost:8080/createUser/redirectAttributesExample
 
 ### Forward vs Redirect
 Extracted from: http://www.javapractices.com/topic/TopicAction.do?Id=181
