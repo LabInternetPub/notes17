@@ -19,11 +19,8 @@ public class UserWebGETController {
             this.userUseCases = userUseCases;
     }
 
-    //returns a static content
-    @GetMapping("welcome")
-    public String welcome() {
-        return "welcome_page.html";
-    }
+    // returns a static content
+    // http://localhost:8080/welcome_page.html
 
     //returns a dynamic content
     @GetMapping("welcome_dynamic")

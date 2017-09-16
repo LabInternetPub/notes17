@@ -15,6 +15,10 @@ In order to keep an *illusion* of state (like keeping a session for an user) the
 * Path variables (generally preferred)
 
 ### GET examples
+* http://localhost:8080/welcome.html
+* http://localhost:8080/welcome_dynamic
+* http://localhost:8080//welcome_requestParam?message=Hello%20to%20everybody
+* http://localhost:8080//welcome_pathVariable/Hello%20to%20everybody
 * http://localhost:8080/users
 * http://localhost:8080/users/roure 
 
@@ -34,14 +38,13 @@ There are three kind of attributes:
 the request access this kind of attributes through the Model object 
 
 ### POST examples
-* **Post form, create a new user (with no error control)**: http://localhost:8080/createUser/noErrorControl
-* **Redirect attributes example** http://localhost:8080/createUser/redirectAttributesExample
+* **Post form, create a new user (with no error control)**: http://localhost:8080/createUserNoErrorControl
+* **Redirect attributes example** http://localhost:8080/createUserNoErrorControl/redirectAttributesExample
 
 ### Forward vs Redirect
 Extracted from: http://www.javapractices.com/topic/TopicAction.do?Id=181
 
 ####Forward 
-
 * a forward is performed internally by the servlet
 * the browser is completely unaware that it has taken place, so its original URL remains intact
 * any browser reload of the resulting page will simple repeat the original request, with the original URL
