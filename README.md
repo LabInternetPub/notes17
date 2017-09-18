@@ -1,56 +1,41 @@
-# Spring Web MVC
+# Spring Web MVC: Validating Forms and Exception handling
 
-## HTTP(S) protocol
-This is the protocol used in all web calls. One thing you need to keep in mind is that **HTTP does NOT have state** meaning 
-that two different http requests are completely independent and have nothing to do each other.
+## Validate Forms
 
-In order to keep an *illusion* of state (like keeping a session for an user) there are a couple of tricks. 
-* Write path parameters to send the session id
-* Keep the session id in cookies   
+It is important to validate form fields. The most convenient way of doing so is in the client itself by programming few 
+javascript validation functions. However, it is also advisable to validate form fields in the server just in case ther
+request is not submitted from our own form. 
 
-## GET method
-* Static pages
-* Dynamic pages: JSP vs Thymeleaf (and others)
-* Request variables
-* Path variables (generally preferred)
+We can take advantage of the Java Validation API and one of its implementations such as the Hibernate Validator. We just need
+to annotate POJOs attributes with one or more of the following: http://docs.oracle.com/javaee/6/tutorial/doc/gircz.html
 
-### GET examples
-* http://localhost:8080/welcome.html
-* http://localhost:8080/welcome_dynamic
-* http://localhost:8080//welcome_requestParam?message=Hello%20to%20everybody
-* http://localhost:8080//welcome_pathVariable/Hello%20to%20everybody
-* http://localhost:8080/users
-* http://localhost:8080/users/roure 
+| Constraint | Description | Example |
+| ---------- | ----------- | ------- |
+| @AssertFalse | The value of the field or property must be false. | @AssertFalse  <br/> boolean isUnsupported; |
 
-## POST method
-* Forms best use POST method instead of GET. POST sends parameters in the http body request while GET sends them concatenated
-in the request query string and the user can easily see them 
-* If *"action"* is not stated in a *form* it sends the request to the same link used to call the form
-* After processing the form the *servlet (controller)* should redirect to another page (for example showing the effects of
-the action) in order to avoid unwillingly re-sending the form
+| @AssertTrue | The value of the field or property must be true. | @AssertTrue <br/> boolean isActive; | 
+| @DecimalMax <br/> @DecimalMin| The value of the field or property must be a decimal value lower/greater than or equal to the number in the value element. | @DecimalMax("30.00") <br/> BigDecimal discount; |
+| @Digits | The value of the field or property must be a number within a specified range. The integer element specifies the maximum integral digits for the number, and the fraction element specifies the maximum fractional digits for the number. | @Digits(integer=6, fraction=2) <br/> BigDecimal price; |
+| @Future | The value of the field or property must be a date in the future. | @Future <br/> Date eventDate; |
+| @Max @Min | The value of the field or property must be an integer value lower/greater than or equal to the number in the value element. @Max(10) <br/> int quantity; |
+| @NotNull | The value of the field or property must not be null. | @NotNull <br/> String username; |
+| @Null | The value of the field or property must be null. | @Null <br/> String unusedString; |
+| @Past | The value of the field or property must be a date in the past. | @Past <br/> Date birthday; |
+| @Pattern | The value of the field or property must match the regular expression defined in the regexp element. | @Pattern(regexp="\\(\\d{3}\\)\\d{3}-\\d{4}") <br/> String phoneNumber; |
+| @Size | The size of the field or property is evaluated and must match the specified boundaries. If the field or property is a String, the size of the string is evaluated. If the field or property is a Collection, the size of the Collection is evaluated. If the field or property is a Map, the size of the Map is evaluated. If the field or property is an array, the size of the array is evaluated. Use one of the optional max or min elements to specify the boundaries. | @Size(min=2, max=240) <br/> String briefMessage; |
 
-### Redirected attributes
-Once the form is processed we should redirect to another page and we may want to send attributes to the redirected page.
-There are three kind of attributes:
-* Request parameter
-* Path variable
-* Flash attributes: sent through the web context, in fact, these attributes never leave the server! The servlet responding 
-the request access this kind of attributes through the Model object 
+You'll see some more examples at UserLab.java where the user attributes are annotated with validation annotations. 
+Then the method that receives the UserLab, the one with the POST mapping that receives the UserLab from the form, needs to annotate
+the corresponding method parameter with the annotation @Validate. Right after the @Validate annotated parameters (there can be more
+than one) an Errors parameters must be declared in order to receive the possible errors produced when building the userLab object.
+These errors are also send back to the form for it to use them and tell the user what was wrong.
 
-### POST examples
-* **Post form, create a new user (with no error control)**: http://localhost:8080/createUserNoErrorControl
-* **Redirect attributes example** http://localhost:8080/createUserNoErrorControl/redirectAttributesExample
+## Exception Handling
 
-### Forward vs Redirect
-Extracted from: http://www.javapractices.com/topic/TopicAction.do?Id=181
-
-#### Forward 
-* a forward is performed internally by the servlet
-* the browser is completely unaware that it has taken place, so its original URL remains intact
-* any browser reload of the resulting page will simple repeat the original request, with the original URL
-
-#### Redirect
-* a redirect is a two step process, where the web application instructs the browser to fetch a second URL, which differs from the original
-* a browser reload of the second URL will not repeat the original request, but will rather fetch the second URL
-* redirect is marginally slower than a forward, since it requires two browser requests, not one
-* objects placed in the original request scope are not available to the second request
+Exceptions will probably be handed off by one of the controllers. If exceptions get to the web controller probably means that either 
+the user can do something about it or nobody can't do anything useful. In either case it is good to keep the user informed.
+A web controller can handle Exceptions by means of the @HandlerException annotation. These methods can be either inside the web controller or 
+or in a new class controller annotated with @ControllerAdvice. In the former case the method will only respond to the exceptions that 
+somehow where caused in the controller while in the later annotated methods will respond to any exception signaled in any web controller.
+See the example for more detail.
+ 
