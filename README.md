@@ -12,7 +12,6 @@ to annotate POJOs attributes with one or more of the following: http://docs.orac
 | Constraint | Description | Example |
 | ---------- | ----------- | ------- |
 | @AssertFalse | The value of the field or property must be false. | @AssertFalse  <br/> boolean isUnsupported; |
-
 | @AssertTrue | The value of the field or property must be true. | @AssertTrue <br/> boolean isActive; | 
 | @DecimalMax <br/> @DecimalMin| The value of the field or property must be a decimal value lower/greater than or equal to the number in the value element. | @DecimalMax("30.00") <br/> BigDecimal discount; |
 | @Digits | The value of the field or property must be a number within a specified range. The integer element specifies the maximum integral digits for the number, and the fraction element specifies the maximum fractional digits for the number. | @Digits(integer=6, fraction=2) <br/> BigDecimal price; |
