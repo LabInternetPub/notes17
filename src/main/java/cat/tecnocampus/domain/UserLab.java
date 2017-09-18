@@ -1,5 +1,8 @@
 package cat.tecnocampus.domain;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 /**
@@ -7,9 +10,23 @@ import java.util.*;
  */
 public class UserLab {
 
+    @NotNull(message = "username cannot be null")
+    @Size(min = 4, max = 15, message = "username must be between 4 an 15 characters long")
+    @Pattern(regexp = "^\\w+", message = "must have alphanumeric characters")
     private String username;
+
+    @NotNull(message = "Name cannot be null")
+    @Size(min = 4, max = 50, message = "Name must be between 4 an 15 characters long")
+    @Pattern(regexp = "^[A-Z].+", message = "Name must match \\^[A-Z].*")
     private String name;
+
+    @NotNull(message = "Second name cannot be null")
+    @Size(min = 4, max = 50, message = "Second name must be between 4 an 15 characters long")
+    @Pattern(regexp = "^[A-Z].+", message = "Second name must match \\^[A-Z].*")
     private String secondName;
+
+    @Pattern(regexp = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b",
+            message = "Email must match \\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")
     private String email;
 
     private final Map<String,NoteLab> noteLabs;
