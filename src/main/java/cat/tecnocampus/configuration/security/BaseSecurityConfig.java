@@ -20,21 +20,23 @@ public class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
                 // order matters. First the most specific, last anyRequest()
         		.antMatchers("/static/**").permitAll()
         		.antMatchers("/h2-console/**").permitAll()
-        		.mvcMatchers("/createuser").permitAll()
+        		.mvcMatchers("/createUser").permitAll()
         		.mvcMatchers("/users").hasRole("USER")
         		.mvcMatchers("/users/{userId}").access("authentication.name == #userId")
 				.mvcMatchers("/users/{userId}/createNote").access("@webSecurity.checkUserId(authentication,#userId)  and isFullyAuthenticated()")
-				.antMatchers("/byebye").permitAll()
+				.antMatchers("/byebye**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin() //a login form is showed when no authenticated request
         		.and()
+			.httpBasic()
+				.and()
             .rememberMe()
                 .tokenValiditySeconds(2419200)
                 .key("notes")
                 .and()
         	.logout()
-            	.logoutSuccessUrl("/byebye"); //where to go when logout is successful
+            	.logoutSuccessUrl("/byebye.html"); //where to go when logout is successful
             //.logoutUrl("logoutpage") // logout page
 
         //Required to allow h2-console work

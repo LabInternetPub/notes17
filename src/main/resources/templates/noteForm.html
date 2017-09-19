@@ -23,16 +23,16 @@
     <table>
     <tr>
         <td><label th:class="${#fields.hasErrors('title')}? 'error'">Title</label>:</td>
-        <td><input type="text" th:field="*{title}" style="font-size: 14pt;width: 200px;"
+        <td><input type="text" th:field="*{title}" style="font-size: 12pt;width: 200px;"
                th:class="${#fields.hasErrors('title')}? 'error'"/><br/></td>
     </tr>
     <tr>
-        <td><label>Content</label></td>
-        <td><textarea type="text" th:field="*{content}" cols= "20" rows = "10" style="font-size:12pt;"/><br/></td>
+        <td valign = "top"><label>Content: </label></td>
+        <td><textarea type="text" th:field="*{content}" cols= "25" rows = "10" style="font-size:12pt;"/><br/></td>
     </tr>
 
     <tr>
-    <td><input type="submit" value="Create Note"/></td>
+    <td><input type="submit" style="font-size: 12pt;" value="Create Note"/></td>
     </tr>
     </table>
 </form>

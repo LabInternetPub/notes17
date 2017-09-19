@@ -4,6 +4,7 @@ import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
 import cat.tecnocampus.persistence.NoteLabDAO;
 import cat.tecnocampus.persistence.UserLabDAO;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

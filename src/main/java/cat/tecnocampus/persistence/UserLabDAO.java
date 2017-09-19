@@ -27,6 +27,7 @@ public class UserLabDAO {
         UserLab userLab = new UserLab.UserLabBuilder(resultSet.getString("username"), resultSet.getString("email"))
                 .name(resultSet.getString("name"))
                 .secondName(resultSet.getString("second_name"))
+                .password(resultSet.getString("password"))
                 .build();
         return userLab;
     }
@@ -50,7 +51,6 @@ public class UserLabDAO {
     }
 
     public int insert(UserLab userLab) {
-        System.out.println("PPPPPPAAAAASSSSSWWWWord: " + userLab.getPassword());
         return jdbcTemplate.update(INSERT_USER, userLab.getUsername(), userLab.getName(), userLab.getSecondName(),
                 userLab.getEmail(), userLab.getPassword(), userLab.getEnabled());
 

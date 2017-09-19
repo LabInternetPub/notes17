@@ -1,4 +1,4 @@
-package cat.tecnocampus.configuration.security;
+package cat.tecnocampus.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;

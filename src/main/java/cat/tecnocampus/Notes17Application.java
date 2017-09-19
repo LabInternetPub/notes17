@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -55,6 +56,11 @@ public class Notes17Application implements CommandLineRunner {
 
 		System.out.println();
 		userLabDAO.findAll().forEach(System.out::println);
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		userLabDAO.findAll().forEach(u -> {
+			System.out.println(u.getUsername() + " " + encoder.encode(u.getPassword()));
+		});
 
 		System.out.println();
 		userLabDAO.findAllEager().forEach(System.out::println);

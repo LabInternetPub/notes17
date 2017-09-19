@@ -2,7 +2,9 @@ package cat.tecnocampus.webControllers;
 
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
+import cat.tecnocampus.security.AuthoritiesDAO;
 import cat.tecnocampus.useCases.UserUseCases;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,9 +16,13 @@ import javax.validation.Valid;
 @Controller
 public class UserWebPOSTController {
     private UserUseCases userUseCases;
+    private AuthoritiesDAO authoritiesDAO;
+    private PasswordEncoder passwordEncoder;
 
-    public UserWebPOSTController(UserUseCases userUseCases) {
+    public UserWebPOSTController(UserUseCases userUseCases, AuthoritiesDAO authoritiesDAO, PasswordEncoder passwordEncoder) {
         this.userUseCases = userUseCases;
+        this.authoritiesDAO = authoritiesDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("createUser")
@@ -35,7 +41,12 @@ public class UserWebPOSTController {
 
         model.addAttribute("username", userLab.getUsername());
 
+        // encrypt the password
+        userLab.setPassword(passwordEncoder.encode((CharSequence) userLab.getPassword()));
+
         userUseCases.registerUser(userLab);
+
+        authoritiesDAO.insertUserRole(userLab.getUsername());
 
         redirectAttributes.addAttribute("username", userLab.getUsername());
 

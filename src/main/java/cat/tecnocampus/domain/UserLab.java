@@ -29,6 +29,8 @@ public class UserLab {
             message = "Email must match \\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")
     private String email;
 
+    @NotNull
+    @Size(min = 5, message = "Password must be 5 or more characters long")
     private String password;
 
     private boolean enabled;
@@ -37,6 +39,7 @@ public class UserLab {
 
     public UserLab() {
         noteLabs = new HashMap<>();
+        enabled = true;
     }
 
     private UserLab(UserLabBuilder builder) {
@@ -141,7 +144,7 @@ public class UserLab {
     }
 
     public String toString() {
-        String value = "Usuari: " + this.username + ", " + this.name + " " + this.secondName;
+        String value = "Usuari: " + this.username + ", " + this.name + " " + this.secondName + " " + this.password;
         value = value + "\n    " + this.getNotes().keySet().toString();
         return value;
     }

@@ -41,6 +41,11 @@
             <td><input type="text" th:field="*{username}"
                        th:class="${#fields.hasErrors('username')}? 'error'"/></td>
         </tr>
+        <tr>
+            <td><label th:class="${#fields.hasErrors('password')}? 'error'">Password</label>:</td>
+            <td><input type="password" th:field="*{password}"
+                       th:class="${#fields.hasErrors('password')}? 'error'"/></td>
+        </tr>
     </table>
 
     <input type="submit" value="Create User" />
