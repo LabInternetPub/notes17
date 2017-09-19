@@ -21,7 +21,7 @@ public class NoteLabDAO {
 
     private final String INSERT_NOTE = "insert into note_lab (title, content, date_creation, date_edit, owner) values(?, ?, ?, ?, ?)";
     private final String FIND_ALL = "select * from note_lab";
-    private final String FIND_BY_USERNAME = "select * from note_lab where owner = ?";
+    private final String FIND_BY_USERNAME = "select * from note_lab where owner = ? order by date_edit desc";
     private final String FIND_BY_TITLE = "select * from note_lab where title = ?";
     private final String FIND_BY_ID = "select * from note_lab where id = ?";
     private final String INSERT_USER_NOTES = "INSERT INTO note_lab (title, content, date_creation, date_edit, owner) values(?, ?, ?, ?, ?)";

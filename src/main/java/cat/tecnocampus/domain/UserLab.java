@@ -29,6 +29,10 @@ public class UserLab {
             message = "Email must match \\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}\\b")
     private String email;
 
+    private String password;
+
+    private boolean enabled;
+
     private final Map<String,NoteLab> noteLabs;
 
     public UserLab() {
@@ -42,6 +46,8 @@ public class UserLab {
         name = builder.name;
         secondName = builder.secondName;
         email = builder.email;
+        password = builder.password;
+        enabled = builder.enabled;
     }
 
     public String getUsername() {
@@ -64,6 +70,14 @@ public class UserLab {
         return this.noteLabs;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -78,6 +92,14 @@ public class UserLab {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public List<NoteLab> getNotesAsList() {
@@ -133,10 +155,13 @@ public class UserLab {
         private String name;
         private String secondName;
         private final String email;
+        private String password;
+        private boolean enabled;
 
         public UserLabBuilder(String username, String email) {
             this.username = username;
             this.email = email;
+            this.enabled = true;
         }
 
         public UserLabBuilder name(String name) {
@@ -146,6 +171,16 @@ public class UserLab {
 
         public UserLabBuilder secondName(String secondName) {
             this.secondName = secondName;
+            return this;
+        }
+
+        public UserLabBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserLabBuilder enabled(boolean enabled) {
+            this.enabled = enabled;
             return this;
         }
 

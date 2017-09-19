@@ -35,6 +35,7 @@ public class Notes17Application implements CommandLineRunner {
 		UserLab user = new UserLab.UserLabBuilder("maristany", "maristany@tecnocampus.cat")
 				.name("Marta")
 				.secondName("Maristany")
+				.password("maristany")
 				.build();
 
 		System.out.println(user);

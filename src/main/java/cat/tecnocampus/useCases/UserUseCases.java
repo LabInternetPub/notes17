@@ -59,6 +59,13 @@ public class UserUseCases {
         return noteLab;
     }
 
+    public NoteLab createUserNote(UserLab userLab, NoteLab noteLab) {
+        noteLab.setDateCreation(LocalDateTime.now());
+        noteLab.setDateEdit(LocalDateTime.now());
+
+        return addUserNote(userLab, noteLab);
+    }
+
     public NoteLab updateUserNote(UserLab userLab, NoteLab oldNote, String title, String contents) {
         NoteLab newNote = new NoteLab.NoteLabBuilder(title, contents)
                 .dateCreation(oldNote.getDateCreation()).dateEdit(LocalDateTime.now()).build();
@@ -97,4 +104,5 @@ public class UserUseCases {
         }
         return userLab.getNotesAsList();
     }
+
 }

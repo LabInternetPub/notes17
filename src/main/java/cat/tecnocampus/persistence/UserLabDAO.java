@@ -18,7 +18,7 @@ public class UserLabDAO {
     private JdbcTemplate jdbcTemplate;
     private NoteLabDAO noteLabDAO;
 
-    private final String INSERT_USER = "insert into user_lab values(?, ?, ?, ?)";
+    private final String INSERT_USER = "insert into user_lab values(?, ?, ?, ?, ?, ?)";
     private final String FIND_ALL = "Select * from user_lab";
     private final String FIND_BY_USERNAME = "Select * from user_lab where username = ?";
     private final String DELETE = "delete from user_lab where username = ?";
@@ -50,7 +50,9 @@ public class UserLabDAO {
     }
 
     public int insert(UserLab userLab) {
-        return jdbcTemplate.update(INSERT_USER, userLab.getUsername(), userLab.getName(), userLab.getSecondName(), userLab.getEmail());
+        System.out.println("PPPPPPAAAAASSSSSWWWWord: " + userLab.getPassword());
+        return jdbcTemplate.update(INSERT_USER, userLab.getUsername(), userLab.getName(), userLab.getSecondName(),
+                userLab.getEmail(), userLab.getPassword(), userLab.getEnabled());
 
     }
 
