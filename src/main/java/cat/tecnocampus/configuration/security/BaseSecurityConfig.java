@@ -22,7 +22,7 @@ public class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/h2-console/**").permitAll()
         		.mvcMatchers("/createUser").permitAll()
         		.mvcMatchers("/users").hasRole("USER")
-        		.mvcMatchers("/users/{userId}").access("authentication.name == #userId")
+        		.mvcMatchers("/users/{userId}").access("principal.username == #userId")//.access("authentication.name == #userId")
 				.mvcMatchers("/users/{userId}/createNote").access("@webSecurity.checkUserId(authentication,#userId)  and isFullyAuthenticated()")
 				.antMatchers("/byebye**").permitAll()
                 .anyRequest().authenticated()
