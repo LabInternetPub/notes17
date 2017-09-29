@@ -57,6 +57,7 @@ provides with default queries.
 Note that when creating and registering a user we needed to modify the UserWebPost when the user is created (the POST createUser) 
 * The user's password must be encrypted since it is received in plain text as written by the user
 * The user must also be added to the authorities table using the *AuthoritiesDAO*  . At least it should have the USER role
+* The user can be logged in using the security context. We could have done the same in InMemorySecurityConfig.
 
 ### Remember me (if you want to)
 It is used for the user not having to log in every time it uses a computer. The *logged in status* is kept for a while (i.e a couple of weeks)

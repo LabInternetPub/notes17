@@ -20,12 +20,3 @@ CREATE TABLE note_lab (
   FOREIGN KEY (owner)
   REFERENCES user_lab(username)
 );
-
-DROP TABLE if EXISTS authorities;
-CREATE TABLE authorities (
-  authority_id int(11) NOT NULL AUTO_INCREMENT,
-  username varchar(45) NOT NULL,
-  role varchar(45) NOT NULL,
-  PRIMARY KEY (authority_id),
-  UNIQUE KEY uni_username_role (role,username),
-  CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES user_lab (username));

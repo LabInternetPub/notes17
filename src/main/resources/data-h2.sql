@@ -15,11 +15,3 @@ INSERT INTO user_lab VALUES ('lecina', 'Maria', 'Lecina', 'lecina@mail.cat', 'le
 
 INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('spring', 'va super be', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
 INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('spring boot', 'va encara millor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
-
-INSERT INTO authorities (username, role) VALUES ('roure', 'ROLE_USER');
-INSERT INTO authorities (username, role) VALUES ('roure', 'ROLE_ADMIN');
-INSERT INTO authorities (username, role) VALUES ('alvarez', 'ROLE_USER');
-INSERT INTO authorities (username, role) VALUES ('castells', 'ROLE_USER');
-INSERT INTO authorities (username, role) VALUES ('riera', 'ROLE_USER');
-INSERT INTO authorities (username, role) VALUES ('garcia', 'ROLE_USER');
-INSERT INTO authorities (username, role) VALUES ('lecina', 'ROLE_USER');

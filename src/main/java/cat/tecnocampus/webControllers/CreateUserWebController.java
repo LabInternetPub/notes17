@@ -2,27 +2,29 @@ package cat.tecnocampus.webControllers;
 
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
-import cat.tecnocampus.security.AuthoritiesDAO;
+import cat.tecnocampus.security.SecurityService;
 import cat.tecnocampus.useCases.UserUseCases;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
-public class UserWebPOSTController {
+public class CreateUserWebController {
     private UserUseCases userUseCases;
-    private AuthoritiesDAO authoritiesDAO;
     private PasswordEncoder passwordEncoder;
+    private SecurityService securityService;
 
-    public UserWebPOSTController(UserUseCases userUseCases, AuthoritiesDAO authoritiesDAO, PasswordEncoder passwordEncoder) {
+    public CreateUserWebController(UserUseCases userUseCases, PasswordEncoder passwordEncoder, SecurityService securityService) {
         this.userUseCases = userUseCases;
-        this.authoritiesDAO = authoritiesDAO;
         this.passwordEncoder = passwordEncoder;
+        this.securityService = securityService;
     }
 
     @GetMapping("createUser")
@@ -44,9 +46,14 @@ public class UserWebPOSTController {
         // encrypt the password
         userLab.setPassword(passwordEncoder.encode((CharSequence) userLab.getPassword()));
 
+        //register user in domain classes
         userUseCases.registerUser(userLab);
 
-        authoritiesDAO.insertUserRole(userLab.getUsername());
+        //insert user role in spring security classes
+        securityService.insertUser(userLab);
+
+        //login user in spring security
+        securityService.login(userLab.getUsername(),userLab.getPassword());
 
         redirectAttributes.addAttribute("username", userLab.getUsername());
 

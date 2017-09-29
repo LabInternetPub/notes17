@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @EnableWebSecurity
 @Profile("security_memory")
@@ -15,8 +16,16 @@ public class InMemorySecurityConfig extends BaseSecurityConfig {
     public PasswordEncoder passEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
-	
-	 //Configure user-details sevices
+
+    @Bean
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+        //final Properties users = new Properties();
+        //users.put("user","pass,ROLE_USER,enabled"); //add whatever other user you need
+        return new InMemoryUserDetailsManager();
+    }
+
+
+    //Configure user-details sevices
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -25,5 +34,7 @@ public class InMemorySecurityConfig extends BaseSecurityConfig {
                 .withUser("roure").password("roure").roles("USER").and()
                 .withUser("admin").password("admin").roles("ADMIN").and()
                 .withUser("both").password("both").roles("USER,ADMIN");
+
+        auth.userDetailsService(inMemoryUserDetailsManager());
     }
 }
