@@ -1,5 +1,8 @@
 package cat.tecnocampus.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -69,6 +72,7 @@ public class UserLab {
         return secondName;
     }
 
+    @JsonIgnore
     public Map<String, NoteLab> getNotes() {
         return this.noteLabs;
     }
@@ -105,6 +109,7 @@ public class UserLab {
         this.enabled = enabled;
     }
 
+    @JsonProperty("notes")
     public List<NoteLab> getNotesAsList() {
         Collection coll = noteLabs.values();
         if (coll instanceof List) {

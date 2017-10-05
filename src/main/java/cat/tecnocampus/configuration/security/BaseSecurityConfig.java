@@ -25,6 +25,7 @@ public class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
         		.mvcMatchers("/users/{userId}").access("authentication.name == #userId") //cannot use principal.username because when user is not logged in principal does not exist
 				.mvcMatchers("/users/{userId}/createNote").access("@webSecurity.checkUserId(authentication,#userId)  and isFullyAuthenticated()")
 				.antMatchers("/byebye**").permitAll()
+				.antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin() //a login form is showed when no authenticated request
