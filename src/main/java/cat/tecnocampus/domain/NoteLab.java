@@ -1,5 +1,8 @@
 package cat.tecnocampus.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -13,6 +16,7 @@ public class NoteLab {
     private String content;
 
     private LocalDateTime dateCreation;
+
     private LocalDateTime dateEdit;
 
     public NoteLab() {
@@ -37,6 +41,7 @@ public class NoteLab {
         return dateCreation;
     }
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime getDateEdit() {
         return dateEdit;
     }

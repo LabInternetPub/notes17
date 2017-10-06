@@ -1,25 +1,32 @@
 package cat.tecnocampus.RESTcontrollers;
 
+import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
 import cat.tecnocampus.security.SecurityService;
 import cat.tecnocampus.useCases.UserUseCases;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @RequestMapping("api/")
-public class UserGETcontroller {
+public class UserRESTController {
     private UserUseCases userUseCases;
     private PasswordEncoder passwordEncoder;
     private SecurityService securityService;
 
-    public UserGETcontroller(UserUseCases userUseCases, PasswordEncoder passwordEncoder, SecurityService securityService) {
+    public UserRESTController(UserUseCases userUseCases, PasswordEncoder passwordEncoder, SecurityService securityService) {
         this.userUseCases = userUseCases;
         this.passwordEncoder = passwordEncoder;
         this.securityService = securityService;
@@ -36,7 +43,10 @@ public class UserGETcontroller {
     }
 
     @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserLab createUser(@RequestBody UserLab user) {
+    public UserLab createUser(@RequestBody @Valid  UserLab user, Errors errors) {
+        if (errors.hasErrors())
+            return null;
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userUseCases.registerUser(user);
@@ -45,6 +55,19 @@ public class UserGETcontroller {
         securityService.insertUser(user);
 
         return user;
+    }
+
+    @PostMapping(value = "users/{username}/note", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NoteLab createNote(@RequestBody @Valid  NoteLab note, Errors errors, @PathVariable String username) {
+        UserLab user;
+
+        if (errors.hasErrors())
+            return null;
+
+        user = userUseCases.getUser(username);
+        userUseCases.createUserNote(user, note);
+
+        return note;
     }
 
 }

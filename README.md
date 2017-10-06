@@ -4,3 +4,4 @@
 * jackson
 * @RequestBody
 * getNotes vs getNotesAsList eliminate one with @JacksonIgnore  @JacksonName
+* @JsonTemplate necessita jsr230
