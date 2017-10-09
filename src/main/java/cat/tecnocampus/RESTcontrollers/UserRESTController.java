@@ -57,7 +57,7 @@ public class UserRESTController {
         return user;
     }
 
-    @PostMapping(value = "users/{username}/note", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "users/{username}/notes", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteLab createNote(@RequestBody @Valid  NoteLab note, Errors errors, @PathVariable String username) {
         UserLab user;
 
@@ -66,6 +66,33 @@ public class UserRESTController {
 
         user = userUseCases.getUser(username);
         userUseCases.createUserNote(user, note);
+
+        return note;
+    }
+
+    @PutMapping(value = "users/{username}/notes/{oldTitle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NoteLab updateNote(@RequestBody @Valid NoteLab note, Errors errors, @PathVariable String username,
+                              @PathVariable String oldTitle) {
+        UserLab user;
+
+        if (errors.hasErrors())
+            return null;
+
+        user = userUseCases.getUser(username);
+        userUseCases.updateUserNote(user, note, oldTitle);
+
+        return note;
+    }
+
+    @DeleteMapping(value = "users/{username}/notes")
+    public NoteLab deleteNote(@RequestBody @Valid NoteLab note, Errors errors, @PathVariable String username) {
+        UserLab user;
+
+        if (errors.hasErrors())
+            return null;
+
+        user = userUseCases.getUser(username);
+        userUseCases.deleteUserNote(user, note);
 
         return note;
     }

@@ -74,8 +74,25 @@ public class UserUseCases {
         userLab.removeNote(oldNote.getTitle());
 
         userLab.addNote(newNote);
-        noteLabDAO.updateNote(oldNote.getTitle(), newNote);
+        noteLabDAO.updateNote(oldNote.getTitle(), newNote, userLab);
         return newNote;
+    }
+
+    public NoteLab updateUserNote(UserLab user, NoteLab note, String oldNoteTitle) {
+
+        NoteLab queryNote = new NoteLab.NoteLabBuilder(oldNoteTitle, "").dateCreation(note.getDateCreation()).build();
+        NoteLab oldNote = user.getNote(queryNote);
+        note.setDateCreation(oldNote.getDateCreation());
+        note.setDateEdit(LocalDateTime.now());
+
+        noteLabDAO.updateNote(oldNoteTitle, note, user);
+
+        return note;
+    }
+
+    public NoteLab deleteUserNote(UserLab user, NoteLab note) {
+        noteLabDAO.deleteNote(user, note);
+        return note;
     }
 
     public List<NoteLab> getUserNotes(String userName) {
@@ -89,10 +106,6 @@ public class UserUseCases {
 
     public UserLab getUser(String userName) {
         return userLabDAO.findByUsername(userName);
-    }
-
-    public boolean existsTitle(String title, UserLab user) {
-        return user.existsNote(title);
     }
 
     public List<NoteLab> getAllNotes() {

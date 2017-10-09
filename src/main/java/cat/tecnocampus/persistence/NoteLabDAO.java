@@ -25,7 +25,8 @@ public class NoteLabDAO {
     private final String FIND_BY_TITLE = "select * from note_lab where title = ?";
     private final String FIND_BY_ID = "select * from note_lab where id = ?";
     private final String INSERT_USER_NOTES = "INSERT INTO note_lab (title, content, date_creation, date_edit, owner) values(?, ?, ?, ?, ?)";
-    private final String UPDATE_NOTE = "update note_lab set title = ?, content = ?, date_edit = ? where date_ creation = ? and title = ?";
+    private final String UPDATE_NOTE = "update note_lab set title = ?, content = ?, date_edit = ? where date_creation = ? and title = ? and owner = ?";
+    private final String DELETE_NOTE = "delete note_lab where title = ? and date_creation = ?";
     private final String EXISTS_NOTE = "select count(*) from note_lab where title = ? and date_creation = ?";
 
     private RowMapper<NoteLab> mapper = (resultSet, i) -> {
@@ -77,9 +78,13 @@ public class NoteLabDAO {
         });
     }
 
-    public int updateNote(String oldTitle, NoteLab note) {
+    public int updateNote(String oldTitle, NoteLab note, UserLab userLab) {
         return jdbcTemplate.update(UPDATE_NOTE,
-                note.getTitle(), note.getContent(), note.getDateEdit(), note.getDateCreation(), oldTitle);
+                note.getTitle(), note.getContent(), note.getDateEdit(), note.getDateCreation(), oldTitle, userLab.getUsername());
+    }
+
+    public int deleteNote(UserLab userLab, NoteLab note) {
+        return jdbcTemplate.update(DELETE_NOTE, note.getTitle(), note.getDateCreation());
     }
 
     public boolean existsNote(NoteLab note) {

@@ -120,13 +120,15 @@ public class UserLab {
         }
     }
 
-    public NoteLab getNote(String title) {
-        return noteLabs.get(title);
+    public NoteLab getNote(NoteLab queryNote) {
+        return noteLabs.get(buildKey(queryNote));
     }
 
     public NoteLab addNote(NoteLab noteLab) {
-        if (!noteLabs.containsKey(noteLab.getTitle())) {
-            noteLabs.put(noteLab.getTitle(),noteLab);
+        String key = buildKey(noteLab);
+
+        if (!noteLabs.containsKey(key)) {
+            noteLabs.put(key,noteLab);
         } else {
             throw new RuntimeException("Note's title is repeated");
         }
@@ -140,12 +142,15 @@ public class UserLab {
         return noteLab;
     }
 
-    public NoteLab removeNote(String title) {
-        return noteLabs.remove(title);
+    public NoteLab removeNote(String key) {
+        return noteLabs.remove(key);
     }
 
     public void addNotes(List<NoteLab> notes) {
-        notes.forEach(n -> noteLabs.put(n.getTitle(),n));
+        notes.forEach(n -> {
+            String key = buildKey(n);
+            noteLabs.put(key,n);
+        });
     }
 
     public String toString() {
@@ -154,8 +159,8 @@ public class UserLab {
         return value;
     }
 
-    public boolean existsNote(String title) {
-        return noteLabs.containsKey(title);
+    public boolean existsNote(String key) {
+        return noteLabs.containsKey(key);
     }
 
     public static class UserLabBuilder {
@@ -197,4 +202,7 @@ public class UserLab {
         }
     }
 
+    private String buildKey(NoteLab noteLab) {
+        return noteLab.getTitle() + noteLab.getDateCreation();
+    }
 }
