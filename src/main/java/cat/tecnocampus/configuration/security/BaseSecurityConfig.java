@@ -1,8 +1,14 @@
 package cat.tecnocampus.configuration.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 public class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -44,6 +50,18 @@ public class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
         http
         	.csrf().disable()
         	.headers()
-        		.frameOptions().disable();
+        		.frameOptions().disable()
+				.and()
+			.cors();  //this is for allowing cross resource
     }
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8000"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 }
