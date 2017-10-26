@@ -52,14 +52,37 @@ of a library called Jackson. See the pom.xml file:
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 ```
-See classes Note and User that now have annotations corresponding the the Jackson library (see linnnkkkk)
+See classes Note and User that now have annotations corresponding the the Jackson library:
+* In Note one date has the following annotation @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss") while
+the other it doesn't. Note the difference in the produced Json
+* In UserLab @JsonIgnore to ignore an attribute
+* In UserLab @JsonProperty("notes") to name an attribute
+
+In the following link you can find all the available annotations
+https://github.com/FasterXML/jackson-annotations
 
 ## REST client
-In order to test    
-
-
-* explain rest
-* jackson
-* @RequestBody
-* getNotes vs getNotesAsList eliminate one with @JacksonIgnore  @JacksonName
-* @JsonTemplate necessita jsr230
+In order to test the API REST we will need a REST client. There are plenty out there. I usually use one called Postman which is a 
+plug for Chrome. With REST clients we can send requests and receive responses. These clients allow us to modify all the parameters
+of a request such as the head and the body of the request. 
+For example: 
+* we could POST a new note by requesting a POST action to the link http://localhost:8080/api/users/roure/notes and adding to 
+the body the following Json:
+```javascript
+{
+    "title": "A REST note",
+    "content": "This is the content of the note"
+}
+```
+* POST a new user by posting an action to the link http://localhost:8080/api/users and adding to the body the following Json:
+```javascript
+{
+    "username": "casagran",
+    "name": "Sonia",
+    "secondName": "Casagran",
+    "email": "casagran@mail.cat",
+    "password": "casagran"
+}
+```
+* We could then modify and delete a note by using the PUT and DELETE actions. Notes will be identified by title and their 
+creation dates.  
