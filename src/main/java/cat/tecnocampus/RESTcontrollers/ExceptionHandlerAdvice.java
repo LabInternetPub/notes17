@@ -32,6 +32,13 @@ public class ExceptionHandlerAdvice {
         return handleError(request, ex,url.substring(url.lastIndexOf("/") + 1) + " duplicated");
     }
 
+    @ExceptionHandler(IndexOutOfBoundsException.class)
+    public ResponseEntity<?> handleNoteDoesNotExist(Model model, HttpServletRequest request, Exception ex) {
+        String url = request.getRequestURL().toString();
+
+        return handleError(request, ex, "note with id " + url.substring(url.lastIndexOf("/") + 1) + " does not exist");
+    }
+
     private ResponseEntity<?> handleError(HttpServletRequest request, Exception ex, String message) {
         String url = request.getRequestURL().toString();
         Error error;

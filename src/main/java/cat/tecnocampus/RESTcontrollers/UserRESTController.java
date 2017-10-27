@@ -2,22 +2,24 @@ package cat.tecnocampus.RESTcontrollers;
 
 import cat.tecnocampus.domain.NoteLab;
 import cat.tecnocampus.domain.UserLab;
+import cat.tecnocampus.hateoasResources.NoteLabResource;
+import cat.tecnocampus.hateoasResources.UserLabResource;
 import cat.tecnocampus.security.SecurityService;
 import cat.tecnocampus.useCases.UserUseCases;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
+import org.springframework.hateoas.Link;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("api/")
@@ -33,13 +35,22 @@ public class UserRESTController {
     }
 
     @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserLab> listUsers() {
-        return userUseCases.getUsers();
+    public List<UserLabResource> listUsers() {
+        List<UserLabResource> userLabResources = new ArrayList<>();
+        userUseCases.getUsers().forEach(u-> {
+            Link link = linkTo(methodOn(UserRESTController.class).listUsers()).slash(u.getUsername()).withSelfRel();
+            UserLabResource ur = buildUserResource(u, link);
+            userLabResources.add(ur);
+                }
+        );
+
+        return userLabResources;
     }
 
     @GetMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserLab showUser(@PathVariable String username, Model model) {
-        return userUseCases.getUser(username);
+    public UserLabResource showUser(@PathVariable String username) {
+        Link link = linkTo(methodOn(UserRESTController.class).showUser(username)).withSelfRel();
+        return buildUserResource(userUseCases.getUser(username), link);
     }
 
     @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,6 +67,24 @@ public class UserRESTController {
 
         return user;
     }
+
+    @GetMapping(value = "users/{username}/notes", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<NoteLabResource> getUserNotes(@PathVariable String username) {
+        List<NoteLabResource> noteLabResources = new ArrayList<>();
+        List<NoteLab> noteLabs = userUseCases.getUser(username).getNotesAsList();
+        for (int i=0; i < noteLabs.size(); i++) {
+            Link link = linkTo(methodOn(UserRESTController.class).getUserNotes(username)).slash(i).withSelfRel();
+            noteLabResources.add(buildNoteLabResource(noteLabs.get(i), link));
+        }
+        return noteLabResources;
+    }
+
+    @GetMapping(value = "users/{username}/notes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NoteLabResource getUserNote(@PathVariable String username, @PathVariable Integer id) {
+        Link link = linkTo(methodOn(UserRESTController.class).getUserNote(username, Integer.valueOf(id))).withSelfRel();
+        return buildNoteLabResource(userUseCases.getUser(username).getNotesAsList().get(id.intValue()), link);
+    }
+
 
     @PostMapping(value = "users/{username}/notes", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteLab createNote(@RequestBody @Valid  NoteLab note, Errors errors, @PathVariable String username) {
@@ -95,6 +124,20 @@ public class UserRESTController {
         userUseCases.deleteUserNote(user, note);
 
         return note;
+    }
+
+    private UserLabResource buildUserResource(UserLab u, Link link) {
+        UserLabResource ur = new UserLabResource(u);
+        ur.add(link);
+        ur.add(linkTo(methodOn(UserRESTController.class).getUserNotes(u.getUsername())).withRel("notes"));
+        return ur;
+    }
+
+    private NoteLabResource buildNoteLabResource(NoteLab n, Link link) {
+        NoteLabResource nr = new NoteLabResource(n);
+        System.out.println(n.getTitle());
+        nr.add(link);
+        return nr;
     }
 
 }
