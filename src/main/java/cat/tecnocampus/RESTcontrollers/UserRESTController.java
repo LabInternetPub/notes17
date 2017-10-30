@@ -37,6 +37,7 @@ public class UserRESTController {
     @GetMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserLabResource> listUsers() {
         List<UserLabResource> userLabResources = new ArrayList<>();
+
         userUseCases.getUsers().forEach(u-> {
             Link link = linkTo(methodOn(UserRESTController.class).listUsers()).slash(u.getUsername()).withSelfRel();
             UserLabResource ur = buildUserResource(u, link);
@@ -50,11 +51,12 @@ public class UserRESTController {
     @GetMapping(value = "users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserLabResource showUser(@PathVariable String username) {
         Link link = linkTo(methodOn(UserRESTController.class).showUser(username)).withSelfRel();
+
         return buildUserResource(userUseCases.getUser(username), link);
     }
 
     @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserLab createUser(@RequestBody @Valid  UserLab user) {
+    public UserLabResource createUser(@RequestBody @Valid  UserLab user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userUseCases.registerUser(user);
@@ -62,13 +64,16 @@ public class UserRESTController {
         //insert user role in spring security classes
         securityService.insertUser(user);
 
-        return user;
+        Link link = linkTo(methodOn(UserRESTController.class).createUser(user)).slash(user.getUsername()).withSelfRel();
+
+        return buildUserResource(user, link);
     }
 
     @GetMapping(value = "users/{username}/notes", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<NoteLabResource> getUserNotes(@PathVariable String username) {
         List<NoteLabResource> noteLabResources = new ArrayList<>();
         List<NoteLab> noteLabs = userUseCases.getUser(username).getNotesAsList();
+
         for (int i=0; i < noteLabs.size(); i++) {
             Link link = linkTo(methodOn(UserRESTController.class).getUserNotes(username)).slash(i).withSelfRel();
             noteLabResources.add(buildNoteLabResource(noteLabs.get(i), link));
@@ -79,29 +84,34 @@ public class UserRESTController {
     @GetMapping(value = "users/{username}/notes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public NoteLabResource getUserNote(@PathVariable String username, @PathVariable Integer id) {
         Link link = linkTo(methodOn(UserRESTController.class).getUserNote(username, Integer.valueOf(id))).withSelfRel();
+
         return buildNoteLabResource(userUseCases.getUser(username).getNotesAsList().get(id.intValue()), link);
     }
 
 
     @PostMapping(value = "users/{username}/notes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public NoteLab createNote(@RequestBody @Valid  NoteLab note, @PathVariable String username) {
+    public NoteLabResource createNote(@RequestBody @Valid  NoteLab note, @PathVariable String username) {
         UserLab user;
 
         user = userUseCases.getUser(username);
         userUseCases.createUserNote(user, note);
 
-        return note;
+        Link link = linkTo(methodOn(UserRESTController.class).getUserNotes(username)).slash(user.getNotesAsList().size()-1).withSelfRel();
+        return buildNoteLabResource(note, link);
     }
 
     @PutMapping(value = "users/{username}/notes/{oldTitle}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public NoteLab updateNote(@RequestBody @Valid NoteLab note, @PathVariable String username,
+    public NoteLabResource updateNote(@RequestBody @Valid NoteLab note, @PathVariable String username,
                               @PathVariable String oldTitle) {
         UserLab user;
+        NoteLab newNote;
 
         user = userUseCases.getUser(username);
-        userUseCases.updateUserNote(user, note, oldTitle);
+        newNote = userUseCases.updateUserNote(user, note, oldTitle);
 
-        return note;
+        Link link = linkTo(UserRESTController.class).slash("users").slash(username).slash("notes")
+                .slash(user.getNoteIndex(newNote)).withSelfRel();
+        return buildNoteLabResource(note, link);
     }
 
     @DeleteMapping(value = "users/{username}/notes")

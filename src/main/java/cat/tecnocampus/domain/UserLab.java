@@ -159,6 +159,19 @@ public class UserLab {
         return value;
     }
 
+    public int getNoteIndex(NoteLab note) {
+        List<NoteLab> notes = this.getNotesAsList();
+        boolean found = false;
+        int i = 0;
+
+        while (i < notes.size()) {
+            if (notes.get(i).getTitle().equals(note.getTitle()) && notes.get(i).getDateCreation().equals(note.getDateCreation()))
+                break;
+            i++;
+        }
+        return i;
+    }
+
     public boolean existsNote(String key) {
         return noteLabs.containsKey(key);
     }
