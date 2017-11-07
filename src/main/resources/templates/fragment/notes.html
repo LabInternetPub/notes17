@@ -9,7 +9,7 @@
     <h3>Notes</h3>
     <ul>
         <li th:each="noteLab,iter : ${notes}">
-            <a th:href="${#strings.concat('/currentUser/notes/',iter.index)}">
+            <a th:onclick="'retrieveNoteDetail(\'http://localhost:8080' + ${#strings.concat('/currentUser/notes/',iter.index)} + '\')'">
             <span th:text="${noteLab.title}">Title</span>
             </a>
         </li>

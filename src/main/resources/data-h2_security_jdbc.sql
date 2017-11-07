@@ -14,8 +14,10 @@ INSERT INTO user_lab VALUES ('garcia', 'Marcel', 'Garcia', 'garcia@mail.cat', 'g
 INSERT INTO user_lab VALUES ('lecina', 'Maria', 'Lecina', 'lecina@mail.cat', 'lecina', 1);
 */
 
-INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('spring', 'va super be', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
-INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('spring boot', 'va encara millor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
+INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('Spring', 'va super be', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
+INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('Spring Boot', 'va encara millor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
+INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('I love this lab', 'in this fantastic lab Im learning quite a lot', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
+INSERT INTO note_lab (title, content, date_creation, date_edit, owner) VALUES ('TCM', 'TCM is the best in the whole world', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'roure');
 
 INSERT INTO authorities (username, role) VALUES ('roure', 'ROLE_USER');
 INSERT INTO authorities (username, role) VALUES ('roure', 'ROLE_ADMIN');

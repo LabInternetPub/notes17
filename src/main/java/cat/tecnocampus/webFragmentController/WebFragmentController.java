@@ -38,8 +38,6 @@ public class WebFragmentController {
 
         model.addAttribute("noteLab", notes.get(idx));
 
-        //return "fragment/noteDetail :: noteDetail";
-        model.addAttribute("notes", notes);
-        return "fragment/currentUser";
+        return "fragment/noteDetail :: noteDetail";
     }
 }
