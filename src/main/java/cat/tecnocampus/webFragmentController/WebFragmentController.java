@@ -25,19 +25,7 @@ public class WebFragmentController {
     @GetMapping()
     public String currentUser(Model model, Principal principal) {
 
-        List<NoteLab> notes = userUseCases.getUserNotes(principal.getName());
-        model.addAttribute("notes", notes);
-        model.addAttribute("noteLab", new NoteLab());
-
         return "fragment/currentUser";
     }
 
-    @GetMapping("notes/{idx}")
-    public String userNote(@PathVariable int idx, Principal principal, Model model) {
-        List<NoteLab> notes = userUseCases.getUserNotes(principal.getName());
-
-        model.addAttribute("noteLab", notes.get(idx));
-
-        return "fragment/noteDetail :: noteDetail";
-    }
 }

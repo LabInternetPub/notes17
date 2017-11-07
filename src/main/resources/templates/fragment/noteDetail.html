@@ -6,12 +6,9 @@
 </head>
 <body>
 <div id="noteDetail" th:fragment="noteDetail">
-    <div th:if="${noteLab.title != null}">
-        <h2 th:text="${noteLab.title}">Title</h2>
-        <div><strong>Date Creation: </strong><span th:text="${noteLab.dateCreation}">Creation date</span></div>
-        <div><strong>Date Edit: </strong><span th:text="${noteLab.dateEdit}">Edit date</span></div>
-        <div><strong>Content: </strong><span th:text="${noteLab.content}">Content</span></div>
-    </div>
+    <div id="oneNoteDetail"></div>
+    <input type="button" onclick="previous()" value="Previous"></input>
+    <input type="button" onclick="next()" value="Next"></input>
 </div>
 </body>
 </html>

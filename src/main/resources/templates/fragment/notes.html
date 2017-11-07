@@ -7,13 +7,7 @@
 <body>
 <div th:fragment="notes">
     <h3>Notes</h3>
-    <ul>
-        <li th:each="noteLab,iter : ${notes}">
-            <a th:onclick="'retrieveNoteDetail(\'http://localhost:8080' + ${#strings.concat('/currentUser/notes/',iter.index)} + '\')'">
-            <span th:text="${noteLab.title}">Title</span>
-            </a>
-        </li>
-    </ul>
+    <div id="titles"></div>
 </div>
 </body>
 </html>
