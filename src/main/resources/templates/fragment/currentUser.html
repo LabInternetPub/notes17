@@ -4,13 +4,33 @@
 <title>CSS Portal - Layout</title>
     <link rel="stylesheet" type="text/css" th:href="@{../../fragment.css}"/>
     <script src="../../jquery-3.2.1.min.js"></script>
-    <script>
+    <script th:inline="javascript">
         function retrieveNoteDetail(url) {
             $("#noteDetail").load(url);
+        }
+        function retrieveAllNotes() {
+            var username = /*[[${#authentication.name}]]*/;
+            var url = "/api/users/" + username + "/notes";
+            $.getJSON(url, function (data) {
+                console.log(data);
+                writeNoteDetail(data);
+                document.getElementById("noteDetail").innerHTML = data[0].title;
+            });
+            console.log("notes"); //see that this is printed before data
+        }
+        function writeNoteDetail(data) {
+            var noteDetail = document.getElementById("noteDetail");
+            var content = writeOneNoteDetail(i);
+            var buttons =
+            content = content + buttons;
         }
     </script>
 </head>
 <body>
+<script>retrieveAllNotes()</script>
+<div id="show-data"></div>
+
+
     <div id="wrapper">
         <div id="headerwrap">
         <div id="header">
